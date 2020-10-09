@@ -1,0 +1,54 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% trans "My shop"  %}{% endblock %}</title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+</head>
+<body>
+<div id="header">
+    <a href="/" class="logo">{% trans "My shop" %}</a>
+
+    <div class="languages">
+        <p>{% trans 'Language' %}</p>
+        <ul class="languages">
+            {% for language in languages %}
+                <li>
+                <a href="/{{ language.code }}/"
+                    {% if language.code == LANGUAGE_CODE %}
+                    {% endif %} class="selector" >
+                    {{ language.name_local }}
+                </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div id="subheader">
+    <div class="cart">
+        {% with total_items=cart|length %}
+            {%  if cart|length > 0 %}
+            {% trans "You cart" %}
+            <a href="{% url 'cart:cart_detail' %}">
+            {% blocktrans with total_items_plural=total_items|pluralize total_price=cart.get_total_price %}
+            {{ total_items }} item {{ total_items_plural }},
+            ${{ total_price }}
+            </a>
+                {% endblocktrans %}
+                {% else %}
+                {% trans 'You cart is empty.' %}
+
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
