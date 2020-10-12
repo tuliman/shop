@@ -13,20 +13,7 @@
 <div id="header">
     <a href="/" class="logo">{% trans "My shop" %}</a>
 
-    <div class="languages">
-        <p>{% trans 'Language' %}</p>
-        <ul class="languages">
-            {% for language in languages %}
-                <li>
-                <a href="/{{ language.code }}/"
-                    {% if language.code == LANGUAGE_CODE %}
-                    {% endif %} class="selector" >
-                    {{ language.name_local }}
-                </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+
 </div>
 <div id="subheader">
     <div class="cart">
